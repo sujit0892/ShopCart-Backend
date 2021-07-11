@@ -40,7 +40,7 @@ public class User {
 	
 	
 
-	public User(String email, String password, String name, boolean isSeller, boolean status) {
+	public User(String email, String password, String name, boolean status) {
 		super();
 		this.email = email;
 		this.password = password;
