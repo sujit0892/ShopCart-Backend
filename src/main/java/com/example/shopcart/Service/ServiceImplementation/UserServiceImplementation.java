@@ -80,8 +80,10 @@ public class UserServiceImplementation implements UserService {
 		// TODO Auto-generated method stub
 		try {
 			User user = userDao.findById(ad.getUser_id()).get();
-			Address address = new Address(ad.getAddress(),ad.isDefault(),user);
+			Address address = new Address(ad.getAddress(),false,user);
 			addressDao.save(address);
+			if(ad.isDefault())
+				makeDefaultAddress(address.getAddress_id(), ad.getUser_id());
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -95,8 +97,10 @@ public class UserServiceImplementation implements UserService {
 		// TODO Auto-generated method stub
 		try {
 			User user = userDao.findById(ph.getUser_id()).get();
-			Phone phone = new Phone(ph.getPhone(),ph.isDefault(),user);
+			Phone phone = new Phone(ph.getPhone(),false,user);
 			phoneDao.save(phone);
+			if(ph.isDefault())
+				makeDefaultPhone(phone.getPhone_id(), ph.getUser_id());
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -111,6 +115,12 @@ public class UserServiceImplementation implements UserService {
 		try {
 			Address ad = addressDao.findById(id).get();
 			addressDao.delete(ad);
+			if(ad.isDefault())
+			{
+				List<Address> ls = addressDao.getAddress(ad.getUser().getUser_id());
+				if(ls.size()!=0)
+					makeDefaultAddress(ls.get(0).getAddress_id(),ad.getUser().getUser_id());	
+			}
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -125,6 +135,13 @@ public class UserServiceImplementation implements UserService {
 		try {
 			Phone phone = phoneDao.findById(id).get();
 			phoneDao.delete(phone);
+			if(phone.isDefault())
+			{
+				List<Phone> ls = phoneDao.getPhone(phone.getUser().getUser_id());
+				if(ls.size()!=0)
+					makeDefaultPhone(ls.get(0).getPhone_id(),phone.getUser().getUser_id());	
+			}
+				
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception

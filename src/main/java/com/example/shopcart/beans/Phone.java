@@ -24,7 +24,7 @@ public class Phone {
 	@Column(nullable=false)
 	private boolean isDefault;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
     @JoinColumn(name="user_id")
     private User user;
 
@@ -45,11 +45,11 @@ public class Phone {
 
 
 
-	public int getProduct_id() {
+	public int getPhone_id() {
 		return phone_id;
 	}
 
-	public void setProduct_id(int phone_id) {
+	public void setPhone_id(int phone_id) {
 		this.phone_id = phone_id;
 	}
 

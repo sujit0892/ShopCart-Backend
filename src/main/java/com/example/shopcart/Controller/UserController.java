@@ -102,6 +102,7 @@ public class UserController {
 		{
 			
 			boolean val = userService.addAddress(address);
+//			System.out.println(address.getUser_id()+ " " +address.getAddress()+" "+address.isDefault());
 			return new ResponseEntity<>(val,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -130,12 +131,12 @@ public class UserController {
 	}
 	
 	@PostMapping(path="/user/removePhone")
-	public ResponseEntity<?> removePhone(@RequestBody int id)
+	public ResponseEntity<?> removePhone(@RequestBody String id)
 	{
 		try
 		{
 			
-			boolean val = userService.removePhone(id);
+			boolean val = userService.removePhone(Integer.parseInt(id));
 			return new ResponseEntity<>(val,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -147,12 +148,12 @@ public class UserController {
 	}
 	
 	@PostMapping(path="/user/removeAddress")
-	public ResponseEntity<?> removeAddress(@RequestBody int id)
+	public ResponseEntity<?> removeAddress(@RequestBody String id)
 	{
 		try
 		{
 			
-			boolean val = userService.removeAddress(id);
+			boolean val = userService.removeAddress(Integer.parseInt(id));
 			return new ResponseEntity<>(val,HttpStatus.OK);
 		}
 		catch(Exception e)

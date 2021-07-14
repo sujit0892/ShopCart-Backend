@@ -2,7 +2,7 @@ package com.example.shopcart.JSONEntity;
 
 public class AddressJSON {
 	private String user_id;
-	private String Address;
+	private String address;
 	private boolean isDefault;
 	private int id;
 	
@@ -11,7 +11,7 @@ public class AddressJSON {
 	public AddressJSON(String user_id, String address, boolean isDefault, int id) {
 		super();
 		this.user_id = user_id;
-		Address = address;
+		this.address = address;
 		this.isDefault = isDefault;
 		this.id = id;
 	}
@@ -37,10 +37,10 @@ public class AddressJSON {
 		this.user_id = user_id;
 	}
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 	public boolean isDefault() {
 		return isDefault;
