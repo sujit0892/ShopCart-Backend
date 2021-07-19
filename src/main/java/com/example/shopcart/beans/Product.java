@@ -1,6 +1,7 @@
 package com.example.shopcart.beans;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +26,7 @@ public class Product {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(nullable=false,length=64)
+	@Column(length=64)
 	private String asin;
 	
 	@Column(nullable=false)
@@ -60,43 +62,31 @@ public class Product {
 	private int stock;
 	
 	@Column
-	private int minOrder;
+	private float rating=0;
 	
-	@Column
-	private int maxOrder;
+	@OneToMany(mappedBy = "image_id")
+	private List<ImageBase> images;
 	
+	@OneToMany(mappedBy = "review")
+	private List<Review> reviews;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private User user;
 	
 	@Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-
 
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	
-	
-
-	public Product( String name, String asin, Category cat_level1, String brand_name, int discount,
-			int price, boolean shipping, String description, String feature, int stock, int minOrder, int maxOrder,
-			Date date) {
+	public Product(String name, Category cat_level1, String brand_name, int discount, int price, boolean shipping,
+			String description, String feature, int stock, User user, Date date) {
 		super();
-
 		this.name = name;
-		this.asin = asin;
 		this.cat_level1 = cat_level1;
 		this.brand_name = brand_name;
 		this.discount = discount;
@@ -105,27 +95,19 @@ public class Product {
 		this.description = description;
 		this.feature = feature;
 		this.stock = stock;
-		this.minOrder = minOrder;
-		this.maxOrder = maxOrder;
+
+		this.user = user;
 		this.date = date;
 	}
 
 
-	public Product(String name, Category cat_level1, String brand_name, int discount, int price, boolean shipping,
-			String description, String feature, int stock, int minOrder, int maxOrder, Date date) {
-		super();
-		this.name = name;
-		this.cat_level1 = cat_level1;
-		this.brand_name = brand_name;
-		this.discount = discount;
-		this.price = price;
-		this.shipping = shipping;
-		this.description = description;
-		this.feature = feature;
-		this.stock = stock;
-		this.minOrder = minOrder;
-		this.maxOrder = maxOrder;
-		this.date = date;
+
+	public String getAsin() {
+		return asin;
+	}
+
+	public void setAsin(String asin) {
+		this.asin = asin;
 	}
 
 	public String getName() {
@@ -134,14 +116,6 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getAsin() {
-		return asin;
-	}
-
-	public void setAsin(String asin) {
-		this.asin = asin;
 	}
 
 	public Category getCat_level1() {
@@ -208,21 +182,24 @@ public class Product {
 		this.stock = stock;
 	}
 
-	public int getMinOrder() {
-		return minOrder;
+
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setMinOrder(int minOrder) {
-		this.minOrder = minOrder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public int getMaxOrder() {
-		return maxOrder;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setMaxOrder(int maxOrder) {
-		this.maxOrder = maxOrder;
+	public void setDate(Date date) {
+		this.date = date;
 	}
+
 	
 }
 
