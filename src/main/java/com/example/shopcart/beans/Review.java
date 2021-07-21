@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table
 public class Review {
@@ -20,6 +22,7 @@ public class Review {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="product")
+	@JsonIgnore
 	private Product product;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -31,12 +34,9 @@ public class Review {
 	private String review;
 	
 	
-	@Column 
-	private String summary;
-	
 	
 	@Column
-	private String rating;
+	private float rating;
 	
 	public Review() {
 		super();
@@ -44,13 +44,13 @@ public class Review {
 	}
 
 
-	public Review(int reviewId, Product product, User user, String review, String summary, String rating) {
+	public Review( Product product, User user, String review, float rating) {
 		super();
-		this.reviewId = reviewId;
+
 		this.product = product;
 		this.user = user;
 		this.review = review;
-		this.summary = summary;
+	
 		this.rating = rating;
 	}
 
@@ -94,22 +94,14 @@ public class Review {
 	}
 
 
-	public String getSummary() {
-		return summary;
-	}
 
 
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
-
-	public String getRating() {
+	public float getRating() {
 		return rating;
 	}
 
 
-	public void setRating(String rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 

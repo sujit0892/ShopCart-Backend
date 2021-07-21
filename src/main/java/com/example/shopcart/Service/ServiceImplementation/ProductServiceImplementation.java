@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import com.example.shopcart.Dao.CategoryDao;
 import com.example.shopcart.Dao.ImageBaseDao;
 import com.example.shopcart.Dao.ProductDao;
+import com.example.shopcart.Dao.ReviewDao;
 import com.example.shopcart.Dao.UserDao;
 import com.example.shopcart.JSONEntity.ProductJSON;
+import com.example.shopcart.JSONEntity.ReviewJSON;
 import com.example.shopcart.Service.ProductService;
 import com.example.shopcart.beans.Category;
 import com.example.shopcart.beans.ImageBase;
 import com.example.shopcart.beans.Product;
+import com.example.shopcart.beans.Review;
 import com.example.shopcart.beans.User;
 
 @Service
@@ -31,6 +34,9 @@ public class ProductServiceImplementation implements ProductService {
 	
 	@Autowired
 	ImageBaseDao imageBaseDao;
+	
+	@Autowired
+	ReviewDao reviewDao;
 	
 	
 	@Override
@@ -216,7 +222,9 @@ public class ProductServiceImplementation implements ProductService {
 	public List<Product> getProductByCat(int cat) {
 		// TODO Auto-generated method stub
 		try {
-			return productDao.getProductByCat(cat);
+			List<Product> products = productDao.getProductByCat(cat);
+			System.out.println(products.get(0).getImages());
+			return products;
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -235,5 +243,39 @@ public class ProductServiceImplementation implements ProductService {
 		}
 		return null;
 	}
+
+
+	@Override
+	public Product getProductById(String product_id) {
+		// TODO Auto-generated method stub
+		try {
+			return productDao.findById(product_id).get();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+
+	@Override
+	public boolean addreview(ReviewJSON reviewJson) {
+		// TODO Auto-generated method stub
+		try {
+//			System.out.println(reviewJson.getProduct_id());
+			Product product = productDao.findById(reviewJson.getProduct_id()).get();
+			User user = userDao.findById(reviewJson.getUser_id()).get();
+			Review review = new Review(product, user, reviewJson.getRevview(), Float.parseFloat(reviewJson.getRating())); 
+			reviewDao.save(review);
+			productDao.updateRating(product.getAsin(),product);
+			return true;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+
 
 }

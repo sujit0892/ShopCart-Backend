@@ -9,10 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.shopcart.Dao.CategoryDao;
+import com.example.shopcart.Dao.ImageBaseDao;
 import com.example.shopcart.Dao.ProductDao;
 import com.example.shopcart.Dao.ReviewDao;
 import com.example.shopcart.Dao.UserDao;
 import com.example.shopcart.beans.Category;
+import com.example.shopcart.beans.ImageBase;
+import com.example.shopcart.beans.Product;
 
 @SpringBootApplication
 public class ShopcartApplication {
@@ -31,24 +34,24 @@ public class ShopcartApplication {
 	@Autowired
 	ReviewDao reviewDao;
 	
+	@Autowired
+	ImageBaseDao imageBaseDao;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ShopcartApplication.class, args);
 	}
 	
-//	@Bean
-//	InitializingBean sendDatabase() {
-//	    return () -> {
-//	    	Scanner sc = new Scanner(new File("F:\\CSVDemo.csv"));  
-//	    	sc.useDelimiter(",");   //sets the delimiter pattern  
-//	    	while (sc.hasNext())  //returns a boolean value  
-//	    	{  
-//	    		System.out.print(sc.next());  //find and returns the next complete token from this scanner  
-//	    	}   
-//	    		sc.close();  //closes the scanner   
-//	    	
-//	    	
-//	      };
-//	   }
+	@Bean
+	InitializingBean sendDatabase() {
+	    return () -> {
+//	       Product p = productDao.findAll().get(0);
+//	       ImageBase i = new ImageBase(p,"https://images-na.ssl-images-amazon.com/images/I/41ax2HXyPsL.jpg");
+//	       imageBaseDao.save(i);
+	       //closes the scanner   
+	    	
+	    	
+	      };
+	   }
 
 }

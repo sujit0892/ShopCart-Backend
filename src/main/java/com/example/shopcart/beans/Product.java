@@ -1,8 +1,10 @@
 package com.example.shopcart.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -38,8 +42,7 @@ public class Product {
     @JoinColumn(name="category")
 	private Category cat_level1;
 	
-	
-	
+
 	@Column
 	private String brand_name;
 	
@@ -64,10 +67,11 @@ public class Product {
 	@Column
 	private float rating=0;
 	
-	@OneToMany(mappedBy = "image_id")
-	private List<ImageBase> images;
+	@Fetch(value = FetchMode.JOIN) 
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private List<ImageBase> imageBase;
 	
-	@OneToMany(mappedBy = "review")
+	@OneToMany(mappedBy = "product")
 	private List<Review> reviews;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -98,9 +102,32 @@ public class Product {
 
 		this.user = user;
 		this.date = date;
+		imageBase = new ArrayList<>();
 	}
 
+	public float getRating() {
+		return rating;
+	}
 
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
+	public List<ImageBase> getImages() {
+		return imageBase;
+	}
+
+	public void setImages(List<ImageBase> images) {
+		this.imageBase.addAll(images);
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
 	public String getAsin() {
 		return asin;

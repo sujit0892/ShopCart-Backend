@@ -3,6 +3,7 @@ package com.example.shopcart.Service;
 import java.util.List;
 
 import com.example.shopcart.JSONEntity.ProductJSON;
+import com.example.shopcart.JSONEntity.ReviewJSON;
 import com.example.shopcart.beans.Category;
 import com.example.shopcart.beans.Product;
 
@@ -22,4 +23,7 @@ public interface ProductService {
 	public List<Product> getProductByCat(int cat);
 	
 	public List<Category> getCategory();
+	public Product getProductById(String product_id);
+	
+	public boolean addreview(ReviewJSON reviewJson);
 }

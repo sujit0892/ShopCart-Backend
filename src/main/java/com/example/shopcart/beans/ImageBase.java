@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table
 public class ImageBase {
@@ -19,8 +21,9 @@ public class ImageBase {
 	private int image_id;
 
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="product")
+	@JsonIgnore
 	private Product product;
 	
 	@Column(nullable=false)

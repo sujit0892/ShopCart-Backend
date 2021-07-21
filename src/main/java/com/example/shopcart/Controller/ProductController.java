@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.shopcart.JSONEntity.ProductJSON;
+import com.example.shopcart.JSONEntity.ReviewJSON;
 import com.example.shopcart.JSONEntity.UserJSON;
 import com.example.shopcart.Service.ProductService;
 import com.example.shopcart.beans.Category;
@@ -212,12 +214,13 @@ public class ProductController {
 		
 	}
 	
-	@GetMapping(path="/product/getProductByCat")
-	public ResponseEntity<?> getProductByCat(@RequestBody int cat)
+	@GetMapping(path="/product/getProductByCat/{cat}")
+	public ResponseEntity<?> getProductByCat(@PathVariable String cat)
 	{
 		try
 		{
-			List<Product> product_id = productService.getProductByCat(cat);
+			System.out.println(cat);
+			List<Product> product_id = productService.getProductByCat(Integer.parseInt(cat));
 			
 			return new ResponseEntity<>(product_id,HttpStatus.OK);
 		}
@@ -245,6 +248,43 @@ public class ProductController {
 		}
 		
 	}
+	
+	@GetMapping(path="/product/{product_id}")
+	public ResponseEntity<?> getProductById(@PathVariable String product_id)
+	{
+		try
+		{
+			Product product = productService.getProductById(product_id);
+			
+			return new ResponseEntity<>(product,HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PostMapping(path="/product/addReview")
+	public ResponseEntity<?> addReview(@RequestBody ReviewJSON review)
+	{
+		try
+		{
+			boolean product_id = productService.addreview(review);
+			
+			return new ResponseEntity<>(product_id,HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	
 	
 	
 	
