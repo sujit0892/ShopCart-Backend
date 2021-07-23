@@ -16,20 +16,37 @@ public class Cart {
     @JoinColumn(name="product")
 	private Product product;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
 	private User user;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="category")
+	private Category category;
 
-	public Cart(int quantity, Product product, User user) {
+	
+
+	public Cart(int quantity, Product product, User user, Category category) {
 		super();
 		this.quantity = quantity;
 		this.product = product;
 		this.user = user;
+		this.category = category;
 	}
 
 	public Cart() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public int getCart_id() {

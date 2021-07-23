@@ -18,21 +18,25 @@ public class Orders {
     @JoinColumn(name="product")
 	private Product product;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="phone")
 	private Phone phone;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="address")
 	private Address address;
 	
 
 	@Column(nullable=false)
 	private int status;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="category")
+	private Category category;
 	
 	
 	@Column(nullable = false)
@@ -46,16 +50,64 @@ public class Orders {
 
 	
 
-	public Orders(int quantity, Product product, User user, Phone phone, Address address, int status, Date date) {
+	
+
+
+
+	public Orders(Product product, User user, Phone phone, Address address, int status, Category category, Date date) {
 		super();
-		this.quantity = quantity;
 		this.product = product;
 		this.user = user;
 		this.phone = phone;
 		this.address = address;
 		this.status = status;
+		this.category = category;
 		this.date = date;
 	}
+
+
+
+
+
+
+
+	public int getOrderid() {
+		return orderid;
+	}
+
+
+
+
+
+
+
+	public void setOrderid(int orderid) {
+		this.orderid = orderid;
+	}
+
+
+
+
+
+
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
+
+
 
 
 
