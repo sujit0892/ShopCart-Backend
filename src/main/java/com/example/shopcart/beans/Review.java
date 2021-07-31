@@ -25,12 +25,12 @@ public class Review {
 	@JsonIgnore
 	private Product product;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
 	private User user;
 	
 	
-	@Column
+	@Column(length=3000)
 	private String review;
 	
 	
@@ -38,13 +38,17 @@ public class Review {
 	@Column
 	private float rating;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="category")
+	private Category category;
+	
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Review( Product product, User user, String review, float rating) {
+	public Review( Product product, User user, String review, float rating, Category category) {
 		super();
 
 		this.product = product;
@@ -52,7 +56,18 @@ public class Review {
 		this.review = review;
 	
 		this.rating = rating;
+		this.category = category;
 	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 
 	public int getReviewId() {
 		return reviewId;

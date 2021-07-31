@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.shopcart.JSONEntity.ProductJSON;
 import com.example.shopcart.JSONEntity.ReviewJSON;
+import com.example.shopcart.JSONEntity.productArray;
 import com.example.shopcart.beans.Category;
 import com.example.shopcart.beans.Product;
 
@@ -26,4 +27,6 @@ public interface ProductService {
 	public Product getProductById(String product_id);
 	
 	public boolean addreview(ReviewJSON reviewJson);
+	
+	public List<Product> getProductArray(productArray product);
 }

@@ -1,5 +1,6 @@
 package com.example.shopcart.Service.ServiceImplementation;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import com.example.shopcart.Dao.ReviewDao;
 import com.example.shopcart.Dao.UserDao;
 import com.example.shopcart.JSONEntity.ProductJSON;
 import com.example.shopcart.JSONEntity.ReviewJSON;
+import com.example.shopcart.JSONEntity.productArray;
 import com.example.shopcart.Service.ProductService;
 import com.example.shopcart.beans.Category;
 import com.example.shopcart.beans.ImageBase;
@@ -45,8 +47,8 @@ public class ProductServiceImplementation implements ProductService {
 		try {
 			User user = userDao.findById(pd.getUser_id()).get();
 			Category cat = categoryDao.findById(pd.getCat_id()).get();
-			Product product = new Product(pd.getName(),cat,pd.getBrand_name(),pd.getDiscount(),pd.getPrice(),pd.isShipping(),pd.getDescription(),
-					pd.getFeature(), pd.getStock(),user,new Date());
+			Product product = new Product(pd.getName(),cat,pd.getBrand_name(),pd.getPrice(),pd.getDescription(),
+					pd.getFeature(), pd.getStock());
 			productDao.save(product);
 			for(String url:pd.getImages())
 			{
@@ -178,7 +180,7 @@ public class ProductServiceImplementation implements ProductService {
 		// TODO Auto-generated method stub
 		try {
 			Product product = productDao.findById(pd.getProduct_id()).get();
-			product.setDiscount(pd.getDiscount());
+//			product.setDiscount(pd.getDiscount());
 			productDao.save(product);
 			return true;
 		} catch (Exception e) {
@@ -194,7 +196,7 @@ public class ProductServiceImplementation implements ProductService {
 		// TODO Auto-generated method stub
 		try {
 			Product product = productDao.findById(pd.getProduct_id()).get();
-			product.setShipping(pd.isShipping());
+//			product.setShipping(pd.isShipping());
 			productDao.save(product);
 			return true;
 		} catch (Exception e) {
@@ -264,7 +266,7 @@ public class ProductServiceImplementation implements ProductService {
 //			System.out.println(reviewJson.getProduct_id());
 			Product product = productDao.findById(reviewJson.getProduct_id()).get();
 			User user = userDao.findById(reviewJson.getUser_id()).get();
-			Review review = new Review(product, user, reviewJson.getRevview(), Float.parseFloat(reviewJson.getRating())); 
+			Review review = new Review(product, user, reviewJson.getRevview(), Float.parseFloat(reviewJson.getRating()),product.getCat_level1()); 
 			reviewDao.save(review);
 			productDao.updateRating(product.getAsin(),product);
 			return true;
@@ -274,6 +276,25 @@ public class ProductServiceImplementation implements ProductService {
 			System.out.println(e.getMessage());
 		}
 		return false;
+	}
+
+
+	@Override
+	public List<Product> getProductArray(productArray product) {
+		// TODO Auto-generated method stub3
+		try {
+			
+			List<Product> out = new ArrayList<>();
+			for(String product_id:product.getProduct_id())
+			{
+				out.add(productDao.findById(product_id).get());
+			}
+			return out;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		return null;
 	}
 	
 

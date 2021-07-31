@@ -46,19 +46,15 @@ public class Product {
 	@Column
 	private String brand_name;
 	
-	@Column(nullable=false)
-	private int discount;
 	
 	@Column(nullable=false)
 	private int price;
+
 	
-	@Column(nullable=false)
-	private boolean shipping;
-	
-	@Column
+	@Column(length=3000)
 	private String description;
 	
-	@Column
+	@Column(length=3000)
 	private String feature;
 	
 	@Column(nullable=false)
@@ -74,34 +70,27 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<Review> reviews;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
-    private User user;
+
 	
-	@Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+	
 
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(String name, Category cat_level1, String brand_name, int discount, int price, boolean shipping,
-			String description, String feature, int stock, User user, Date date) {
+	public Product(String name, Category cat_level1, String brand_name, int price, 
+			String description, String feature, int stock) {
 		super();
 		this.name = name;
 		this.cat_level1 = cat_level1;
 		this.brand_name = brand_name;
-		this.discount = discount;
 		this.price = price;
-		this.shipping = shipping;
 		this.description = description;
 		this.feature = feature;
 		this.stock = stock;
 
-		this.user = user;
-		this.date = date;
+
 		imageBase = new ArrayList<>();
 	}
 
@@ -161,13 +150,7 @@ public class Product {
 		this.brand_name = brand_name;
 	}
 
-	public int getDiscount() {
-		return discount;
-	}
 
-	public void setDiscount(int discount) {
-		this.discount = discount;
-	}
 
 	public int getPrice() {
 		return price;
@@ -177,13 +160,7 @@ public class Product {
 		this.price = price;
 	}
 
-	public boolean isShipping() {
-		return shipping;
-	}
 
-	public void setShipping(boolean shipping) {
-		this.shipping = shipping;
-	}
 
 	public String getDescription() {
 		return description;
@@ -211,21 +188,6 @@ public class Product {
 
 
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	
 }

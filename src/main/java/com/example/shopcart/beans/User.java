@@ -29,13 +29,12 @@ public class User {
 	@Column(nullable = false,length=64)
 	private String password;
 	
-	@Column(nullable = false,length=64)
+	@Column(nullable = false)
 	private String name;
 	
 	
 	
-	@Column(nullable = false)
-	private boolean status;
+	
 
 	
 	
@@ -86,13 +85,6 @@ public class User {
 	}
 
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 	
 	
 	

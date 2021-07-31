@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.shopcart.JSONEntity.ProductJSON;
 import com.example.shopcart.JSONEntity.ReviewJSON;
 import com.example.shopcart.JSONEntity.UserJSON;
+import com.example.shopcart.JSONEntity.productArray;
 import com.example.shopcart.Service.ProductService;
 import com.example.shopcart.beans.Category;
 import com.example.shopcart.beans.Product;
@@ -274,6 +275,23 @@ public class ProductController {
 			boolean product_id = productService.addreview(review);
 			
 			return new ResponseEntity<>(product_id,HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PostMapping(path="/product/getProductArray")
+	public ResponseEntity<?> getProductArray(@RequestBody productArray products)
+	{
+		try
+		{
+			List<Product> product = productService.getProductArray(products);
+			
+			return new ResponseEntity<>(product,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
